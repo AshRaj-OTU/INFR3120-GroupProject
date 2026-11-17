@@ -1,0 +1,30 @@
+<%- include('partials/header') %>
+
+<h1>Rules</h1>
+
+<h2>Study rooms</h2>
+<ul class="rules">
+  <li>Rooms are for group study. Each room has a minimum group size.</li>
+  <li>A booking can be up to <%= config.roomMaxMinutes / 60 %> hours long and made up to <%= config.daysAhead - 1 %> days ahead.</li>
+  <li>If the room is still empty 15 minutes after the start time, the booking is forfeited and other students may use the room.</li>
+  <li>Choose a group name that is suitable for public viewing. It appears on the schedule.</li>
+  <li>Leave the room clean, wipe the whiteboard and take your belongings with you.</li>
+  <li>Covered drinks are fine. Please keep hot food out of the rooms.</li>
+</ul>
+
+<h2>Lab equipment</h2>
+<ul class="rules">
+  <li>Equipment is for coursework and practice by students in networking and computer engineering courses.</li>
+  <li>A booking can be up to <%= config.equipmentMaxMinutes / 60 %> hours long and made up to <%= config.daysAhead - 1 %> days ahead.</li>
+  <li>Equipment stays in its lab. Do not move devices between pods or benches.</li>
+  <li>Before you leave, erase your device configurations, return cables to the rack and power down what you switched on.</li>
+  <li>Report anything damaged or missing to lab staff straight away.</li>
+  <li>If you have not arrived 15 minutes after the start time, the booking is forfeited.</li>
+</ul>
+
+<h2>Your email</h2>
+<ul class="rules">
+  <li>Your email address is used only to send your confirmation. It is never shown on the public schedule.</li>
+</ul>
+
+<%- include('partials/footer') %>
