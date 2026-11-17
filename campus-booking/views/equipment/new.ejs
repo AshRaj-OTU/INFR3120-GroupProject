@@ -1,0 +1,71 @@
+<%- include('../partials/header') %>
+
+<form class="panel form" action="/equipment" method="post">
+  <h1>Book equipment</h1>
+  <%- include('../partials/errors') %>
+
+  <!-- The item, date and time were chosen on the grid, so they are shown
+       read-only and sent along in hidden fields. -->
+  <input type="hidden" name="item" value="<%= item.id %>">
+  <input type="hidden" name="date" value="<%= date %>">
+  <input type="hidden" name="start" value="<%= start %>">
+
+  <div class="field-row">
+    <div class="field">
+      <label>Lab</label>
+      <input type="text" value="<%= lab.name %>" readonly>
+    </div>
+    <div class="field">
+      <label>Equipment</label>
+      <input type="text" value="<%= item.name %>" readonly>
+    </div>
+  </div>
+  <p class="hint"><%= item.details %></p>
+  <div class="field-row">
+    <div class="field">
+      <label>Date</label>
+      <input type="text" value="<%= formatDate(date) %>" readonly>
+    </div>
+    <div class="field">
+      <label>Start</label>
+      <input type="text" value="<%= formatTime(start) %>" readonly>
+    </div>
+  </div>
+
+  <% if (durations.length === 0) { %>
+    <p class="errors">This time slot is no longer available. <a href="/equipment/schedule?lab=<%= lab.id %>&date=<%= date %>">Back to the schedule</a></p>
+  <% } else { %>
+    <div class="field">
+      <label for="duration">End</label>
+      <select id="duration" name="duration">
+        <% durations.forEach(function(d) { %>
+          <option value="<%= d.minutes %>" <%= parseInt(values.duration, 10) === d.minutes ? 'selected' : '' %>>
+            <%= formatTime(start + d.minutes) %> (<%= d.label %>)
+          </option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="title">Brief description</label>
+      <input id="title" type="text" name="title" maxlength="40" required value="<%= values.title || '' %>">
+      <small>Shown publicly on the schedule, for example your name or course code.</small>
+    </div>
+
+    <div class="field">
+      <label for="notes">Full description <span class="optional">(optional)</span></label>
+      <textarea id="notes" name="notes" rows="3" maxlength="500"><%= values.notes || '' %></textarea>
+      <small>What you plan to work on, or anything the lab staff should know.</small>
+    </div>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" type="email" name="email" required value="<%= values.email || '' %>">
+      <small>Your booking confirmation is sent here.</small>
+    </div>
+
+    <button class="button" type="submit">Save booking</button>
+  <% } %>
+</form>
+
+<%- include('../partials/footer') %>

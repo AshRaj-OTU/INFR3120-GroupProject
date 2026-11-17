@@ -1,0 +1,5 @@
+# installed packages, npm install puts these back
+node_modules/
+
+# MongoDB password and email login, never upload these
+.env

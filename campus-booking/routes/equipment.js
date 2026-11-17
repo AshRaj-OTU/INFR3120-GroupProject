@@ -21,6 +21,13 @@ function findItem(id) {
   return null;
 }
 
+// Checks that a start time is one of the real slot times on the grid.
+// filter() keeps only the slots that match, so a real slot leaves one behind.
+function isSlotStart(start) {
+  var matches = schedule.slotStarts().filter(function(s) { return s === start; });
+  return matches.length > 0;
+}
+
 // Renders the booking form, for the first visit and when there are errors.
 async function showForm(res, found, date, start, errors, values) {
   var bookings = await Booking.find({ resourceId: found.item.id, date: date });
@@ -48,8 +55,8 @@ router.get('/', function(req, res) {
 /* GET /equipment/schedule?lab=&date= : the grid of equipment and time slots. */
 router.get('/schedule', async function(req, res, next) {
   try {
-    var lab = findLab(String(req.query.lab || ''));
-    var date = String(req.query.date || '');
+    var lab = findLab(req.query.lab);
+    var date = req.query.date || '';
     if (!lab || !schedule.isBookableDate(date)) return res.redirect('/equipment');
 
     var bookings = await Booking.find({ kind: 'equipment', date: date });
@@ -73,10 +80,11 @@ router.get('/schedule', async function(req, res, next) {
 /* GET /equipment/new?item=&date=&start= : the booking form for one open slot. */
 router.get('/new', async function(req, res, next) {
   try {
-    var found = findItem(String(req.query.item || ''));
-    var date = String(req.query.date || '');
-    var start = Number(req.query.start);
-    if (!found || !schedule.isBookableDate(date) || !schedule.slotStarts().includes(start)) {
+    var found = findItem(req.query.item);
+    var date = req.query.date || '';
+    // query string values are text, so turn the start time back into a number
+    var start = parseInt(req.query.start, 10);
+    if (!found || !schedule.isBookableDate(date) || !isSlotStart(start)) {
       return res.redirect('/equipment');
     }
     await showForm(res, found, date, start, [], {});
@@ -88,7 +96,7 @@ router.get('/new', async function(req, res, next) {
 /* POST /equipment : save the booking, or show the form again with the errors. */
 router.post('/', async function(req, res, next) {
   try {
-    var found = findItem(String(req.body.item || ''));
+    var found = findItem(req.body.item);
     if (!found) return res.redirect('/equipment');
 
     var result = await createBooking({
@@ -102,9 +110,9 @@ router.post('/', async function(req, res, next) {
 
     if (result.errors.length) {
       res.status(400);
-      return await showForm(res, found, String(req.body.date || ''), Number(req.body.start), result.errors, req.body);
+      return await showForm(res, found, req.body.date || '', parseInt(req.body.start, 10), result.errors, req.body);
     }
-    res.redirect('/bookings/confirmation/' + result.booking.id + '?mailed=' + (result.mailed ? '1' : '0'));
+    res.redirect('/bookings/confirmation/' + result.booking._id + '?mailed=' + (result.mailed ? '1' : '0'));
   } catch (err) {
     next(err);
   }

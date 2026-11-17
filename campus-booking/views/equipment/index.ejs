@@ -1,0 +1,32 @@
+<%- include('../partials/header') %>
+
+<h1>Book lab equipment</h1>
+
+<ol class="steps">
+  <li>Choose a lab and a date, then pick an open time slot for the pod or item you need.</li>
+  <li>Equipment stays in its lab. Leave everything cabled and powered the way you found it.</li>
+  <li>If you have not arrived 15 minutes after the start time, the booking is forfeited.</li>
+  <li>A confirmation is sent to the email address you enter. No account is needed.</li>
+</ol>
+
+<form class="panel" action="/equipment/schedule" method="get">
+  <div class="field">
+    <label for="lab">Lab</label>
+    <select id="lab" name="lab">
+      <% labs.forEach(function(lab) { %>
+        <option value="<%= lab.id %>"><%= lab.name %> (<%= lab.items.length %> items)</option>
+      <% }) %>
+    </select>
+  </div>
+  <fieldset>
+    <legend>Choose a date</legend>
+    <div class="date-grid">
+      <% dates.forEach(function(d, i) { %>
+        <label><input type="radio" name="date" value="<%= d.value %>" <%= i === 0 ? 'checked' : '' %>> <%= d.label %></label>
+      <% }) %>
+    </div>
+  </fieldset>
+  <button class="button" type="submit">Continue</button>
+</form>
+
+<%- include('../partials/footer') %>

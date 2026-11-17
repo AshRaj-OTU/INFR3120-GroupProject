@@ -1,0 +1,10 @@
+<!-- Validation errors. Expects "errors", an array of messages (may be empty). -->
+<% if (typeof errors !== 'undefined' && errors.length) { %>
+  <div class="errors">
+    <ul>
+      <% errors.forEach(function(e) { %>
+        <li><%= e %></li>
+      <% }) %>
+    </ul>
+  </div>
+<% } %>

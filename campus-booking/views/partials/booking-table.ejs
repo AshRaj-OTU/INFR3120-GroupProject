@@ -1,0 +1,27 @@
+<!-- Table of bookings. Expects "bookings". Emails are never shown here. -->
+<% if (bookings.length === 0) { %>
+  <p>No upcoming bookings yet.</p>
+<% } else { %>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Booked</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Booked by</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% bookings.forEach(function(b) { %>
+        <tr>
+          <td><%= b.kind === 'room' ? 'Study room' : 'Equipment' %></td>
+          <td><%= b.kind === 'room' ? b.resourceName : b.labName + ' – ' + b.resourceName %></td>
+          <td><%= formatDate(b.date) %></td>
+          <td><%= formatTime(b.start) %> – <%= formatTime(b.end) %></td>
+          <td><%= b.title %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } %>

@@ -1,0 +1,31 @@
+<%- include('../partials/header') %>
+
+<div class="panel form">
+  <h1>Booking confirmed</h1>
+
+  <% if (mailed) { %>
+    <p class="success">A confirmation email has been sent to <strong><%= booking.email %></strong>.</p>
+  <% } else { %>
+    <p class="warning">Your booking is saved, but the confirmation email could not be sent. Keep a note of the reference below.</p>
+  <% } %>
+
+  <dl class="summary">
+    <dt>Reference</dt>
+    <dd><%= booking.reference %></dd>
+    <dt>Booked</dt>
+    <dd><%= booking.kind === 'room' ? 'Study room ' + booking.resourceName : booking.labName + ' – ' + booking.resourceName %></dd>
+    <dt>Date</dt>
+    <dd><%= formatDate(booking.date) %></dd>
+    <dt>Time</dt>
+    <dd><%= formatTime(booking.start) %> – <%= formatTime(booking.end) %></dd>
+    <dt>Name</dt>
+    <dd><%= booking.title %></dd>
+  </dl>
+
+  <p>
+    <a class="button" href="/">Back to home</a>
+    <a href="/bookings">View all bookings</a>
+  </p>
+</div>
+
+<%- include('../partials/footer') %>

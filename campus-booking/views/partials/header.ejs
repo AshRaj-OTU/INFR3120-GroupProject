@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %> | <%= siteName %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">
+      <!-- Team logo: replace public/images/logo.svg with the real logo file. -->
+      <img class="logo" src="/images/logo.svg" alt="Team logo">
+      <span class="brand-name"><%= siteName %></span>
+    </a>
+    <nav class="site-nav">
+      <a href="/rooms">Book a room</a>
+      <a href="/equipment">Book equipment</a>
+      <a href="/bookings">All bookings</a>
+      <a href="/rules">Rules</a>
+    </nav>
+  </header>
+  <main>
