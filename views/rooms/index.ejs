@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Book a Study Room</title>
+</head>
+<body>
+  <h1>Book a study room</h1>
+  <ol>
+    <li>
+      To secure a booking, a minimum number of people is required:
+      <ul>
+        <% rooms.forEach(function(room) { %>
+          <li>
+            <strong><%= room.id %>:</strong>
+            <%= room.minPeople %> people required to book
+            (maximum capacity <%= room.maxPeople %>)
+          </li>
+        <% }); %>
+      </ul>
+    </li>
+    <li>
+      If a room is still unoccupied 15 minutes after the booking
+      start time, the booking is forfeited and other students can
+      use the room.
+    </li>
+    <li>
+      A confirmation is sent to the email address you enter.
+      No account is needed.
+    </li>
+  </ol>
+  <form action="/rooms/schedule" method="get">
+    <fieldset>
+      <legend><strong>Choose a date</strong></legend>
+      <% dates.forEach(function(date, index) { %>
+        <div>
+          <label>
+            <input type="radio" name="date"
+              value="<%= date.value %>"
+              <%= index === 0 ? 'checked' : '' %>>
+            <%= date.label %>
+          </label>
+        </div>
+      <% }); %>
+      <br>
+      <button type="submit">Continue</button>
+    </fieldset>
+  </form>
+</body>
+</html>

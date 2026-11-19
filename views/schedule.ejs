@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Study Room Schedule</title>
+</head>
+<body>
+  <h1>Study Room Schedule</h1>
+  <h2><%= dateLabel %></h2>
+  <p>Select an available time to book a study room.</p>
+  <% if (taken) { %>
+    <p>Sorry, that time is no longer available.</p>
+  <% } %>
+  <table border="1" cellpadding="8">
+    <tr>
+      <th>Time</th>
+      <% grid.rooms.forEach(function(room) { %>
+        <th><%= room.id %></th>
+      <% }); %>
+    </tr>
+    <% grid.rows.forEach(function(row) { %>
+      <tr>
+        <td><%= row.label %></td>
+        <% row.cells.forEach(function(cell) { %>
+          <td>
+            <% if (cell.status === 'free') { %>
+              <a href="/rooms/book?room=<%= cell.roomId %>&date=<%= date %>&start=<%= cell.start %>">
+                Available
+              </a>
+            <% } else if (cell.status === 'booked') { %>
+              Booked
+              <p><%= cell.groupName %></p>
+            <% } else { %>
+              Past
+            <% } %>
+          </td>
+        <% }); %>
+      </tr>
+    <% }); %>
+  </table>
+  <p>
+    <a href="/rooms">Choose Another Date</a>
+  </p>
+</body>
+</html>

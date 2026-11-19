@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Booking Confirmation</title>
+</head>
+<body>
+  <h1>Booking Confirmed!</h1>
+  <p>Your study room has been successfully booked.</p>
+  <h2>Booking Details</h2>
+  <p><strong>Room:</strong> <%= room.id %></p>
+  <p><strong>Date:</strong> <%= dateLabel %></p>
+  <p><strong>Start Time:</strong> <%= startLabel %></p>
+  <p><strong>End Time:</strong> <%= endLabel %></p>
+  <p><strong>Group Name:</strong> <%= groupName %></p>
+  <p><strong>Number of People:</strong> <%= people %></p>
+  <p><strong>Email:</strong> <%= email %></p>
+  <h2>Important Reminder</h2>
+  <p>
+    Please arrive on time. If your room is still unoccupied
+    15 minutes after your booking starts, your booking
+    will be forfeited.
+  </p>
+  <p>
+    <a href="/rooms">Book Another Room</a>
+  </p>
+  <p>
+    <a href="/bookings">View All Bookings</a>
+  </p>
+</body>
+</html>

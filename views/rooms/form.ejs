@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Book a Study Room</title>
+</head>
+<body>
+  <h1>Book a Study Room</h1>
+  <p>Room: <%= room.id %></p>
+  <p>Date: <%= dateLabel %></p>
+  <p>Start Time: <%= startLabel %></p>
+  <p>Capacity: <%= room.minPeople %> to <%= room.maxPeople %> people</p>
+  <% if (errors && errors.length > 0) { %>
+    <ul>
+      <% errors.forEach(function(error) { %>
+        <li><%= error %></li>
+      <% }); %>
+    </ul>
+  <% } %>
+  <form action="/rooms/book" method="post">
+    <input type="hidden" name="room" value="<%= room.id %>">
+    <input type="hidden" name="date" value="<%= date %>">
+    <input type="hidden" name="start" value="<%= start %>">
+    <label>Group Name:</label>
+    <input type="text" name="groupName"
+      value="<%= values.groupName || '' %>" required>
+    <br><br>
+    <label>Email:</label>
+    <input type="email" name="email"
+      value="<%= values.email || '' %>" required>
+    <br><br>
+    <label>Number of People:</label>
+    <input type="number" name="people"
+      min="<%= room.minPeople %>"
+      max="<%= room.maxPeople %>"
+      value="<%= values.people || room.minPeople %>" required>
+    <br><br>
+    <label>Booking Duration:</label>
+    <select name="duration" required>
+      <% durations.forEach(function(duration) { %>
+        <option value="<%= duration.value %>"
+          <%= Number(values.duration) === duration.value ? 'selected' : '' %>>
+          <%= duration.label %>
+        </option>
+      <% }); %>
+    </select>
+    <br><br>
+    <button type="submit">Confirm Booking</button>
+  </form>
+  <p><a href="/rooms/schedule?date=<%= date %>">Back to Schedule</a></p>
+</body>
+</html>
