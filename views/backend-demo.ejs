@@ -1,0 +1,44 @@
+<%- include('partials/demo_header') %>
+<main>
+  <h1>Part 1 - Booking Backend Demo</h1>
+  <p>Local development only. This form uses dummy student information.</p>
+  <% if (message) { %>
+    <p role="status"><strong><%= message %></strong></p>
+  <% } %>
+  <form action="/demo" method="post">
+    <p><label for="bookingType">Booking type</label>
+    <select name="bookingType" id="bookingType" required>
+      <option value="room">Study room</option>
+      <option value="equipment">Equipment</option>
+    </select></p>
+    <p><label for="resourceId">Resource ID</label>
+    <input type="text" name="resourceId" id="resourceId" value="room-101" required maxlength="80"></p>
+    <p><label for="date">Date</label>
+    <input type="date" name="date" id="date" required></p>
+    <p><label for="startTime">Start time</label>
+    <input type="time" name="startTime" id="startTime" value="10:00" required></p>
+    <p><label for="endTime">End time</label>
+    <input type="time" name="endTime" id="endTime" value="11:00" required></p>
+    <button type="submit">Create test booking</button>
+  </form>
+  <h2>Saved bookings</h2>
+  <% if (bookings.length === 0) { %>
+    <p>No bookings yet.</p>
+  <% } else { %>
+    <table>
+      <thead><tr><th>Type</th><th>Resource</th><th>Date</th><th>Start</th><th>End</th></tr></thead>
+      <tbody>
+      <% bookings.forEach(function(booking) { %>
+        <tr>
+          <td><%= booking.bookingType %></td>
+          <td><%= booking.resourceId %></td>
+          <td><%= booking.date %></td>
+          <td><%= booking.startTime %></td>
+          <td><%= booking.endTime %></td>
+        </tr>
+      <% }); %>
+      </tbody>
+    </table>
+  <% } %>
+</main>
+<%- include('partials/demo_footer') %>
