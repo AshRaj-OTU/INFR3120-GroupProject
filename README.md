@@ -31,7 +31,7 @@ Open http://localhost:3000. The application starts in preview mode without Mongo
 - `/health` – database status and preview/live mode
 
 ## Render
-
+Webpage Link: https://infr3120-groupproject.onrender.com/
 Use a Node Web Service connected to `main`. Leave Root Directory blank. Build command: `npm install`. Start command: `npm start`. Health check: `/health`. Set `NODE_ENV=production` and `TZ=America/Toronto`. Render supplies PORT. Add `MONGODB_URI` in Render for live bookings. Optional SMTP settings from `.env.example` enable confirmation email if the hosting service permits the connection.
 
 ## Testing and first-release limitations
