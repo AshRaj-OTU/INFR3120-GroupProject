@@ -41,7 +41,7 @@ a:hover { color: #000; }
   font-weight: 700;
   font-size: 1.15rem;
 }
-.logo { height: 40px; width: auto; }
+.logo { height: 60px; width: auto; }
 .site-nav { display: flex; gap: 20px; flex-wrap: wrap; }
 .site-nav a { text-decoration: none; }
 .site-nav a:hover { text-decoration: underline; }
