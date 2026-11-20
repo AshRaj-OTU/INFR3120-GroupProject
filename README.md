@@ -8,7 +8,7 @@ Our site lets Ontario Tech students book study rooms and networking and computer
 
 - Avi Patel: Landing page, equipment booking, bookings table, rules page, styles and README.
 - Ashwin Rajakrishna: Express backend, MongoDB connection, booking model, validation, overlap checking and Render deployment.
-- Damanjeet: Study room booking, date selection, schedule grid and booking form.
+- Damanjeet: Study room booking, schedule grid and booking form.
 
 ## Run locally
 
