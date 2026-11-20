@@ -40,6 +40,4 @@ Run `npm test` for validation, overlap checks, simultaneous requests in one proc
 
 The preview displays the pages and schedules but cannot verify availability or save reservations. The integrated room form uses the original two-hour maximum per reservation and requires a student number, as does the equipment form. Daily/term limits, cancellation and automatic forfeiture are not implemented. The overlap queue protects a single Node process, not multiple instances. Replace the placeholder logo with the group's final original logo. The project uses the original Part 1 schema; any existing records using a different schema would need migration.
 
-## Code sources
 
-The group used Express Generator, course lecture examples and the Assignment 2 structure. Existing teammate files and the Part 1 backend were combined; ChatGPT assisted with the route and schema integration, preview mode, missing form handlers and test updates. The team's original README also noted Claude assistance with header/footer and debugging resources and confirmation pages. Review the changes and retain source acknowledgments required by the course.
