@@ -167,3 +167,23 @@ fieldset { border: 1px solid #ddd; border-radius: 6px; padding: 16px; margin: 0 
   .site-header { justify-content: center; }
   .hero { padding: 28px 16px; }
 }
+
+
+/* Wide schedule grid: stays in the centred column and scrolls sideways */
+.table-scroll {
+  overflow-x: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+.table-scroll table { border: none; margin: 0; }
+
+/* Keep "Cisco Pod 12" and "9:00 AM" on one line, centre the cells */
+.schedule th, .schedule td { white-space: nowrap; text-align: center; }
+.schedule th:first-child, .schedule td:first-child {
+  text-align: left;
+  position: sticky;   /* time column stays visible while scrolling */
+  left: 0;
+  background: #fff;
+}
+.schedule th:first-child { background: #f2f2f2; }

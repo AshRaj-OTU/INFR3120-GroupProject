@@ -1,0 +1,18 @@
+<%- include('../partials/header') %>
+<h1><%= heading %> &ndash; <%= formatDate(date) %></h1>
+<p class="hint">You can book equipment for a minimum of 1 hour and a maximum of 3 hours.</p>
+<div class="table-scroll">
+  <table class="schedule">
+    <thead><tr><th>Time</th><% columns.forEach(function(c) { %><th><%= c.name %></th><% }) %></tr></thead>
+    <tbody>
+    <% rows.forEach(function(r) { %>
+      <tr><td><%= formatTime(r.time) %></td>
+      <% r.cells.forEach(function(c) { %>
+        <td><% if (c.booked) { %>Booked: <%= c.title %><% } else { %><a href="<%= c.href %>">Open</a><% } %></td>
+      <% }) %></tr>
+    <% }) %>
+    </tbody>
+  </table>
+</div>
+<p><a href="<%= backHref %>">Back</a></p>
+<%- include('../partials/footer') %>

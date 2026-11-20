@@ -5,7 +5,7 @@ var express = require('express');
 var router = express.Router();
 
 var Booking = require('../models/booking');
-var schedule = require('../lib/schedule');
+var schedule = require('../lib/equipmentSchedule');
 
 /* GET /bookings : every upcoming booking, in a table. */
 router.get('/', async function(req, res, next) {

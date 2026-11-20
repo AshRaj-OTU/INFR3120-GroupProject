@@ -5,7 +5,7 @@ var router = express.Router();
 
 var Booking = require('../models/booking');
 var config = require('../config/resources');
-var schedule = require('../lib/schedule');
+var schedule = require('../lib/equipmentSchedule');
 var createBooking = require('../lib/createBooking');
 
 function findLab(id) {
@@ -64,7 +64,7 @@ router.get('/schedule', async function(req, res, next) {
       return '/equipment/new?item=' + item.id + '&date=' + date + '&start=' + start;
     });
 
-    res.render('schedule', {
+    res.render('equipment/schedule', {
       title: lab.name,
       heading: lab.name,
       date: date,

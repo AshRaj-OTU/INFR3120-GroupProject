@@ -5,7 +5,7 @@ var router = express.Router();
 
 var Booking = require('../models/booking');
 var config = require('../config/resources');
-var schedule = require('../lib/schedule');
+var schedule = require('../lib/equipmentSchedule');
 
 /* GET home page: hero buttons plus a table of the next bookings. */
 router.get('/', async function(req, res, next) {
