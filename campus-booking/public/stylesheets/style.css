@@ -1,8 +1,169 @@
+/* Campus Booking - simple neutral styles (no colour, just spacing and structure) */
+
+* { box-sizing: border-box; }
+
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin: 0;
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #222;
+  background: #fafafa;
 }
 
-a {
-  color: #00B7FF;
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 20px 48px;
+}
+
+h1, h2 { line-height: 1.2; margin: 0 0 16px; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.35rem; margin-top: 32px; }
+
+a { color: #222; }
+a:hover { color: #000; }
+
+/* Header: logo + site name on the left, links on the right */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 14px 24px;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+.logo { height: 40px; width: auto; }
+.site-nav { display: flex; gap: 20px; flex-wrap: wrap; }
+.site-nav a { text-decoration: none; }
+.site-nav a:hover { text-decoration: underline; }
+
+/* Footer */
+.site-footer {
+  text-align: center;
+  padding: 20px;
+  border-top: 1px solid #ddd;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Hero section on the home page */
+.hero {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 40px 32px;
+  margin-bottom: 32px;
+  text-align: center;
+}
+.hero h1 { font-size: 2.4rem; }
+.hero p { margin: 0 0 20px; color: #555; }
+
+/* Buttons */
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 4px;
+  border: 1px solid #222;
+  border-radius: 6px;
+  background: #222;
+  color: #fff;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+.button:hover { background: #fff; color: #222; }
+
+/* Tables (bookings list and schedule grid) */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid #ddd;
+  margin-bottom: 16px;
+}
+th, td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+th {
+  background: #f2f2f2;
+  font-weight: 600;
+  border-bottom: 1px solid #ddd;
+}
+tbody tr:hover { background: #f7f7f7; }
+
+/* Cards that hold forms */
+.panel {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.panel.form { max-width: 600px; }
+
+/* Form fields */
+.field { margin-bottom: 16px; }
+.field label, legend { display: block; font-weight: 600; margin-bottom: 6px; }
+.field-row { display: flex; gap: 16px; }
+.field-row .field { flex: 1; }
+
+input[type="text"], input[type="email"], select, textarea {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  font: inherit;
+  background: #fff;
+}
+input[readonly] { background: #f2f2f2; color: #555; }
+input:focus, select:focus, textarea:focus { outline: 2px solid #222; outline-offset: 1px; }
+
+small, .hint { display: block; color: #666; font-size: 0.85rem; margin-top: 4px; }
+.optional { font-weight: 400; color: #777; }
+
+fieldset { border: 1px solid #ddd; border-radius: 6px; padding: 16px; margin: 0 0 16px; }
+.date-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; }
+.date-grid label { font-weight: 400; }
+
+/* Messages */
+.errors, .warning, .success {
+  border: 1px solid #999;
+  border-left-width: 4px;
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  background: #f5f5f5;
+}
+.errors ul { margin: 0; padding-left: 18px; }
+
+/* Booking summary on the confirmation page */
+.summary {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 8px 16px;
+  margin: 20px 0;
+}
+.summary dt { font-weight: 600; color: #555; }
+.summary dd { margin: 0; }
+
+/* Numbered steps and rule lists */
+.steps, .rules { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 16px 16px 16px 36px; }
+.steps li, .rules li { margin-bottom: 6px; }
+
+/* Small screens */
+@media (max-width: 640px) {
+  .field-row { flex-direction: column; gap: 0; }
+  .site-header { justify-content: center; }
+  .hero { padding: 28px 16px; }
 }
