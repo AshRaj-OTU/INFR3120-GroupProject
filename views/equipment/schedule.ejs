@@ -8,7 +8,7 @@
     <% rows.forEach(function(r) { %>
       <tr><td><%= formatTime(r.time) %></td>
       <% r.cells.forEach(function(c) { %>
-        <td><% if (c.booked) { %>Booked: <%= c.title %><% } else { %><a href="<%= c.href %>">Open</a><% } %></td>
+        <td><% if (c.booked) { %>Booked: <%= c.title %><% } else if (c.past) { %>Past<% } else { %><a href="<%= c.href %>">Open</a><% } %></td>
       <% }) %></tr>
     <% }) %>
     </tbody>

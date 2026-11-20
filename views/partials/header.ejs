@@ -9,7 +9,7 @@
 <body>
   <header class="site-header">
     <a class="brand" href="/">
-      <!-- Team logo: replace public/images/logo.svg with the real logo file. -->
+      <!-- Replace the placeholder with the final team-created logo. -->
       <img class="logo" src="/images/logo.svg" alt="Team logo">
       <span class="brand-name"><%= siteName %></span>
     </a>
@@ -21,3 +21,6 @@
     </nav>
   </header>
   <main>
+    <% if (!databaseConnected) { %>
+      <p class="warning">Preview mode: the database is offline. You can browse the website and schedules, but availability cannot be verified and bookings cannot be saved.</p>
+    <% } %>

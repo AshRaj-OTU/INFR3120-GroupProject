@@ -187,3 +187,4 @@ fieldset { border: 1px solid #ddd; border-radius: 6px; padding: 16px; margin: 0 
   background: #fff;
 }
 .schedule th:first-child { background: #f2f2f2; }
+button:disabled {opacity:.5;cursor:not-allowed;}

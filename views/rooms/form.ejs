@@ -1,10 +1,4 @@
-
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Book a Study Room</title>
-</head>
-<body>
+<%- include('../partials/header') %>
   <h1>Book a Study Room</h1>
   <p>Room: <%= room.id %></p>
   <p>Date: <%= dateLabel %></p>
@@ -24,6 +18,9 @@
     <label>Group Name:</label>
     <input type="text" name="groupName"
       value="<%= values.groupName || '' %>" required>
+    <br><br>
+    <label>Student Number:</label>
+    <input type="text" name="studentNumber" pattern="[0-9]+" value="<%= values.studentNumber || '' %>" required>
     <br><br>
     <label>Email:</label>
     <input type="email" name="email"
@@ -45,8 +42,7 @@
       <% }); %>
     </select>
     <br><br>
-    <button type="submit">Confirm Booking</button>
+    <button class="button" type="submit" <%= !databaseConnected || !durations.length ? "disabled" : "" %>>Confirm Booking</button>
   </form>
   <p><a href="/rooms/schedule?date=<%= date %>">Back to Schedule</a></p>
-</body>
-</html>
+<%- include('../partials/footer') %>

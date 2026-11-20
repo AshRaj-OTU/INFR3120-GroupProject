@@ -1,4 +1,5 @@
 var mongoose=require('mongoose');
+mongoose.set('bufferCommands',false);
 async function connectDatabase(){
   if(!process.env.MONGODB_URI){
     throw new Error('MONGODB_URI is missing.');

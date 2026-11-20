@@ -4,7 +4,7 @@
 var express = require('express');
 var router = express.Router();
 
-var Booking = require('../models/booking');
+var Booking = require('../lib/readBookings');
 var schedule = require('../lib/equipmentSchedule');
 
 /* GET /bookings : every upcoming booking, in a table. */

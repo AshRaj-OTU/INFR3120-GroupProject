@@ -59,12 +59,16 @@
     </div>
 
     <div class="field">
+      <label for="studentNumber">Student number</label>
+      <input id="studentNumber" type="text" name="studentNumber" pattern="[0-9]+" value="<%= values.studentNumber || '' %>" required>
+    </div>
+    <div class="field">
       <label for="email">Email</label>
       <input id="email" type="email" name="email" required value="<%= values.email || '' %>">
-      <small>Your booking confirmation is sent here.</small>
+      <small>Used for booking confirmation when email is configured.</small>
     </div>
 
-    <button class="button" type="submit">Save booking</button>
+    <button class="button" type="submit" <%= databaseConnected ? "" : "disabled" %>>Save booking</button>
   <% } %>
 </form>
 

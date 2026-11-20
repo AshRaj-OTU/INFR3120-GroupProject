@@ -1,0 +1,15 @@
+var assert=require('assert');
+var room=require('../lib/schedule');
+var equipment=require('../lib/equipmentSchedule');
+var date=room.addDays(room.todayString(),1);
+var bookings=[{roomId:'SR-201A',date:date,startTime:'10:00',endTime:'11:00',userName:'Test group'}];
+var grid=room.buildGrid(date,bookings);
+assert.strictEqual(grid.rows[2].cells[0].status,'booked');
+assert.strictEqual(grid.rows[4].cells[0].status,'free');
+assert.strictEqual(room.maxDurationFor('SR-201A',date,540,bookings),60);
+assert.strictEqual(room.parseSlot({room:'SR-201A',date:date,start:'09:60'}).errors.length>0,true);
+var items=[{id:'pod-1'}];
+var eq=[{resourceId:'pod-1',start:600,end:660,title:'Test'}];
+assert.strictEqual(equipment.buildGrid(items,eq,date,function(){return '/test';})[1].cells[0].booked,true);
+assert.strictEqual(equipment.durationChoices(eq,540,180).length,1);
+console.log('Room and equipment schedule integration tests passed.');

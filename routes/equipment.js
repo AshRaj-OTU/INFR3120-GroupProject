@@ -3,10 +3,12 @@
 var express = require('express');
 var router = express.Router();
 
-var Booking = require('../models/booking');
+var Booking = require('../lib/readBookings');
 var config = require('../config/resources');
 var schedule = require('../lib/equipmentSchedule');
 var createBooking = require('../lib/createBooking');
+var roomSchedule=require('../lib/schedule');
+var sendConfirmation=require('../lib/mailer');
 
 function findLab(id) {
   return config.labs.find(function(lab) { return lab.id === id; });
@@ -30,14 +32,14 @@ function isSlotStart(start) {
 
 // Renders the booking form, for the first visit and when there are errors.
 async function showForm(res, found, date, start, errors, values) {
-  var bookings = await Booking.find({ resourceId: found.item.id, date: date });
+  var bookings = await Booking.find({ bookingType:'equipment',resourceId: found.item.id, date: date });
   res.render('equipment/new', {
     title: 'Book ' + found.item.name,
     lab: found.lab,
     item: found.item,
     date: date,
     start: start,
-    durations: schedule.durationChoices(bookings, start, config.equipmentMaxMinutes),
+    durations: roomSchedule.at(date,start)<=new Date()?[]:schedule.durationChoices(bookings, start, config.equipmentMaxMinutes),
     errors: errors,
     values: values
   });
@@ -59,7 +61,7 @@ router.get('/schedule', async function(req, res, next) {
     var date = req.query.date || '';
     if (!lab || !schedule.isBookableDate(date)) return res.redirect('/equipment');
 
-    var bookings = await Booking.find({ kind: 'equipment', date: date });
+    var bookings = await Booking.find({ bookingType: 'equipment', date: date });
     var rows = schedule.buildGrid(lab.items, bookings, date, function(item, start) {
       return '/equipment/new?item=' + item.id + '&date=' + date + '&start=' + start;
     });
@@ -93,29 +95,31 @@ router.get('/new', async function(req, res, next) {
   }
 });
 
-/* POST /equipment : save the booking, or show the form again with the errors. */
-router.post('/', async function(req, res, next) {
-  try {
-    var found = findItem(req.body.item);
-    if (!found) return res.redirect('/equipment');
-
-    var result = await createBooking({
-      kind: 'equipment',
-      resource: found.item,
-      labName: found.lab.name,
-      maxMinutes: config.equipmentMaxMinutes,
-      body: req.body,
-      siteName: req.app.locals.siteName
-    });
-
-    if (result.errors.length) {
-      res.status(400);
-      return await showForm(res, found, req.body.date || '', parseInt(req.body.start, 10), result.errors, req.body);
+/* POST /equipment: validate and save through the shared backend. */
+router.post('/',async function(req,res,next){
+  try{
+    var found=findItem(req.body.item);
+    var date=req.body.date||'';
+    var start=Number(req.body.start);
+    var duration=Number(req.body.duration);
+    if(!found||!schedule.isBookableDate(date)||!isSlotStart(start)) return res.redirect('/equipment');
+    var errors=[];
+    if(![60,120,180].includes(duration)||start+duration>1260) errors.push('Invalid duration.');
+    if(roomSchedule.at(date,start)<=new Date()) errors.push('This time has passed.');
+    var title=String(req.body.title||'').trim();
+    if(!title||title.length>40) errors.push('Enter a description of 1 to 40 characters.');
+    if(errors.length){res.status(400);return await showForm(res,found,date,start,errors,req.body);}
+    try{
+      var booking=await createBooking({bookingType:'equipment',resourceId:found.item.id,resourceName:found.item.name,labName:found.lab.name,studentName:title,studentNumber:req.body.studentNumber,email:req.body.email,date:date,startTime:roomSchedule.minutesToValue(start),endTime:roomSchedule.minutesToValue(start+duration),title:title,notes:req.body.notes||''});
+    }catch(error){
+      if([400,409,503].includes(error.status)){
+        res.status(error.status);
+        return await showForm(res,found,date,start,[error.message],req.body);
+      }
+      throw error;
     }
-    res.redirect('/bookings/confirmation/' + result.booking._id + '?mailed=' + (result.mailed ? '1' : '0'));
-  } catch (err) {
-    next(err);
-  }
+    var mailed=await sendConfirmation(booking);
+    res.redirect(303,'/bookings/confirmation/'+booking._id+'?mailed='+(mailed?'1':'0'));
+  }catch(error){next(error);}
 });
-
-module.exports = router;
+module.exports=router;
